@@ -1,0 +1,123 @@
+:root{
+    --bgColor: #000814;
+    --primary: #001D3D;
+    --secondary: #003566;
+    --primaryAccent: #FFC300;
+    --primaryAccent: #FFD60A;
+}
+
+body{
+    padding : 0;
+    font-family: 'Nunito', sans-serif;
+    box-sizing: border-box;
+    background-color: var(--bgColor);
+}
+
+.main-logo{
+    color: var(--primaryAccent);
+    padding: 5px;
+    width: 600px;
+    margin-top: 50px;
+    margin-left: none;
+}
+.main-logo svg{
+    fill: var(--primaryAccent);
+    height: 2.5rem;
+}
+
+.main-logo h1{
+    display: inline;
+    font-size: 2.8rem;
+}
+
+.header div{
+    margin: 50px;
+    margin-left: 0;
+    color: var(--primaryAccent);
+}
+
+.controls button{
+    text-align: left;
+    border: 1px solid var(--primaryAccent);
+    color: var(--primaryAccent);
+    padding: 5px 10px;
+    font: 'Nunito';
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: var(--bgColor);
+}
+
+.word{
+    display: inline-block;
+    color: gray;
+    font-size: larger;
+    margin: 5px;
+}
+
+.words{
+    filter: blur(4px);
+}
+
+.game{
+    width: 800px;
+    line-height: 28px;
+    height: 105px;
+    overflow: hidden;
+    position: relative;
+}
+
+#focus-error{
+    position: absolute;
+    inset: 0;
+    text-align: center;
+    color: white;
+    margin-top: 40px;
+    cursor: pointer;
+}
+
+.letter.correct{
+    color: white;
+}
+
+.letter.incorrect{
+    color: rgb(255, 115, 115);
+}
+
+.cursor{
+    display: none;
+    width: 2px;
+    height: 1.3rem;
+    background: var(--primaryAccent);
+    position: fixed;
+    top: 330px;
+    left: 12px;
+    animation: blink 0.5s infinite;
+}
+
+.game:focus .words{
+    filter: blur();
+}
+
+.game:focus #focus-error{
+    display: none;
+}
+
+.game:focus .cursor{
+    display: block;
+}
+
+@keyframes blink {
+
+    0%{
+        opacity: 0;
+    }
+
+    50%{
+        opacity: 1;
+    }
+
+    100%{
+        opacity: 0;
+    }
+}
+
