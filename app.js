@@ -30,23 +30,24 @@ function newGame() {
     addClass(document.querySelector(".letter"), "current");
 }
 
-let letterCount = 0;
+let wrongLetterCount = 0;
 
 document.querySelector(".game").addEventListener('keyup', ev => {
     const key = ev.key;
     const currWord = document.querySelector(".word.current");
     const currLetter = document.querySelector(".letter.current");
-    let totalLetters = currWord.childElementCount;
+    const cursor = document.querySelector('.cursor');
     
     const expected = currLetter ? currLetter.innerHTML : ' ';
     
     const isLetter = (key.length === 1);
-    const isSpace = key === ' ';
     
     console.log({key, expected});
     if(expected !== ' ') {
         
-        if(currLetter) {
+        //reset the wrongletterCount bcoz we are at new word and we are not at the end of the word
+        wrongLetterCount = 0;
+        if(currLetter && isLetter) {
 
             addClass(currLetter, expected === key ? 'correct' : 'incorrect');
             removeClass(currLetter, 'current');
@@ -58,13 +59,39 @@ document.querySelector(".game").addEventListener('keyup', ev => {
         }
 
     } else if(expected === ' ' && key === ' ') {
+
+        //we are at the end of the word, and if we press SpaceBar then we move to the next word
         removeClass(currWord, 'current');
         if(currWord.nextSibling) {
             addClass(currWord.nextSibling, 'current');
             addClass(currWord.nextSibling.firstChild, 'current');
         }
 
+    } else if(expected === ' ' && key !== ' '  && isLetter && wrongLetterCount < 20) {
+
+        //we are at thr end of the word and we are not pressing space bar, in that case we need to add new letters
+        //at the end of the  
+        wrongLetterCount++;
+        const wrongLetter = document.createElement('span');
+        addClass(wrongLetter, 'letter');
+        addClass(wrongLetter, 'wrong-letter');
+        wrongLetter.innerHTML = key;
+        currWord.lastChild.appendChild(wrongLetter);
+        console.log(currLetter);
     }
+
+    const nextLetter = document.querySelector('.current.letter');
+    const nextWord = document.querySelector('.current.word');
+
+    console.log(cursor);
+    if(nextLetter) {
+        cursor.style.top = nextLetter.getBoundingClientRect().top + 'px';
+        cursor.style.left = nextLetter.getBoundingClientRect().left + 'px';
+        
+    } else {
+        cursor.style.left = nextWord.getBoundingClientRect().right + 'px';
+
+    } 
 })
 
 newGame();
