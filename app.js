@@ -30,23 +30,23 @@ function newGame() {
     addClass(document.querySelector(".letter"), "current");
 }
 
-let wrongLetterCount = 0;
+let extraLetterCount = 0;
 
 document.querySelector(".game").addEventListener('keyup', ev => {
     const key = ev.key;
     const currWord = document.querySelector(".word.current");
     const currLetter = document.querySelector(".letter.current");
     const cursor = document.querySelector('.cursor');
-    
     const expected = currLetter ? currLetter.innerHTML : ' ';
-    
     const isLetter = (key.length === 1);
-    
-    console.log({key, expected});
+    const isBackspace = key === 'Backspace';
+    const isFirstLetter = currWord && currLetter === currWord.firstChild;
+    const isExtraLetter = document.querySelector('.letter.extra-letter');
+    //main letter checking logic
     if(expected !== ' ') {
         
-        //reset the wrongletterCount bcoz we are at new word and we are not at the end of the word
-        wrongLetterCount = 0;
+        //reset the extraletterCount bcoz we are at new word and we are not at the end of the word
+        extraLetterCount = 0;
         if(currLetter && isLetter) {
 
             addClass(currLetter, expected === key ? 'correct' : 'incorrect');
@@ -67,23 +67,55 @@ document.querySelector(".game").addEventListener('keyup', ev => {
             addClass(currWord.nextSibling.firstChild, 'current');
         }
 
-    } else if(expected === ' ' && key !== ' '  && isLetter && wrongLetterCount < 20) {
+    } else if(expected === ' ' && key !== ' '  && isLetter && extraLetterCount < 20) {
 
         //we are at thr end of the word and we are not pressing space bar, in that case we need to add new letters
         //at the end of the  
-        wrongLetterCount++;
-        const wrongLetter = document.createElement('span');
-        addClass(wrongLetter, 'letter');
-        addClass(wrongLetter, 'wrong-letter');
-        wrongLetter.innerHTML = key;
-        currWord.lastChild.appendChild(wrongLetter);
-        console.log(currLetter);
+        extraLetterCount++;
+        const extraLetter = document.createElement('span');
+        addClass(extraLetter, 'letter');
+        addClass(extraLetter, 'extra-letter');
+        extraLetter.innerHTML = key;
+        currWord.appendChild(extraLetter);
     }
 
+    //backspace logic
+    if(isBackspace){
+
+        if(currLetter && currWord.previousSibling && isFirstLetter) {
+
+            removeClass(currWord, 'current');
+            removeClass(currLetter, 'current');
+            addClass(currWord.previousSibling, 'current');
+            addClass(currWord.previousSibling.lastChild, 'current');
+            removeClass(currWord.previousSibling.lastChild, 'incorrect');
+            removeClass(currWord.previousSibling.lastChild, 'correct');
+                       
+            
+        } else if(currLetter && !isFirstLetter){
+            removeClass(currLetter, 'current');
+            addClass(currLetter.previousSibling, 'current');
+            removeClass(currLetter.previousSibling, 'correct');
+            removeClass(currLetter.previousSibling, 'incorrect');
+            
+        } else if(!currLetter) {
+            addClass(currWord.lastChild, 'current');
+            removeClass(currWord.lastChild, 'correct');
+            removeClass(currWord.lastChild, 'incorrect');
+            cursor.style.left = currWord.lastChild.getBoundingClientRect().left + 'px';
+            
+        } 
+        
+        if(isExtraLetter) {
+            cursor.style.left = currWord.lastChild.getBoundingClientRect().right + 'px';
+            currWord.removeChild(currWord.lastChild);
+        }
+
+    } 
+    //moving the cursor logic
     const nextLetter = document.querySelector('.current.letter');
     const nextWord = document.querySelector('.current.word');
 
-    console.log(cursor);
     if(nextLetter) {
         cursor.style.top = nextLetter.getBoundingClientRect().top + 'px';
         cursor.style.left = nextLetter.getBoundingClientRect().left + 'px';
@@ -92,6 +124,8 @@ document.querySelector(".game").addEventListener('keyup', ev => {
         cursor.style.left = nextWord.getBoundingClientRect().right + 'px';
 
     } 
+
+    
 })
 
 newGame();
