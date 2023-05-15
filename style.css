@@ -13,12 +13,24 @@ body{
     background-color: var(--bgColor);
 }
 
+.header {
+    display: flex;
+    justify-content: space-around;
+    margin: auto;
+}
+
+.info{
+    padding-top: 5px;
+}
+
 .main-logo{
     color: var(--primaryAccent);
     padding: 5px;
     width: 600px;
-    margin-top: 50px;
+    margin-top: 5px;
     margin-left: none;
+    padding-bottom: 50px;
+
 }
 .main-logo svg{
     fill: var(--primaryAccent);
@@ -37,14 +49,24 @@ body{
 }
 
 .controls button{
-    text-align: left;
+    margin: 10px;
     border: 1px solid var(--primaryAccent);
     color: var(--primaryAccent);
-    padding: 5px 10px;
+    padding: 5px 15px;
     font: 'Nunito';
     border-radius: 10px;
+    font-weight: 600;
+    
     cursor: pointer;
     background-color: var(--bgColor);
+    transition: all;
+    transition-duration: .2s;
+}
+
+.controls button:hover{
+    background-color: var(--primaryAccent);
+    color:var(--bgColor);
+    border-color: var(--bgColor);
 }
 
 .word{
@@ -59,9 +81,11 @@ body{
 }
 
 .game{
-    width: 800px;
-    line-height: 28px;
-    height: 105px;
+    margin: auto;
+    text-align: justify;
+    width: 850px;
+    line-height: 25px;
+    height: 145px;
     overflow: hidden;
     position: relative;
 }
@@ -80,7 +104,12 @@ body{
 }
 
 .letter.incorrect{
-    color: rgb(255, 115, 115);
+    color: rgb(255, 59, 59);
+}
+
+.letter.extra-letter {
+    font-weight: 600;
+    color: rgb(163, 0, 0);
 }
 
 .cursor{
@@ -89,8 +118,8 @@ body{
     height: 1.3rem;
     background: var(--primaryAccent);
     position: fixed;
-    top: 330px;
-    left: 12px;
+    top: 325px;
+    left: 140px;
     animation: blink 0.5s infinite;
 }
 
@@ -102,9 +131,7 @@ body{
     display: none;
 }
 
-.game:focus .cursor{
-    display: block;
-}
+
 
 @keyframes blink {
 
