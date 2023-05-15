@@ -1,6 +1,6 @@
 const words = 'this is a simple paragraph that is meant to be nice and easy to type which is why there will be mommas no periods or any capital letters so i guess this means that it cannot really be considered a paragraph but just a series of run on sentences this should help you get faster at typing as im trying not to use too many difficult words in it although i think that i might start making it'.split(' ');
 const wordLen = words.length - 1;
-
+const cursor = document.querySelector('.cursor');
 
 function randomWord() {
     let randomInd = Math.round(Math.random() * wordLen);
@@ -30,18 +30,48 @@ function newGame() {
     addClass(document.querySelector(".letter"), "current");
 }
 
+function reset() {
+    cursor.style.display = 'none';
+    const correctElements = document.querySelectorAll(".correct");
+    const incorrectElements = document.querySelectorAll(".incorrect");
+    const extraElements = document.querySelectorAll(".extra-letter");
+    const currElements = document.querySelectorAll(".current");
+
+    addClass(document.querySelector(".word"), "current");
+    addClass(document.querySelector(".letter"), "current");
+
+    currElements.forEach(element => {
+        removeClass(element, 'current');
+    });
+
+    correctElements.forEach(element => {
+        removeClass(element, 'correct');
+    });
+    
+    incorrectElements.forEach(element => {
+        removeClass(element, 'incorrect');
+    });
+
+    extraElements.forEach(element => {
+        element.remove();
+    });
+}
+
 let extraLetterCount = 0;
 
 document.querySelector(".game").addEventListener('keyup', ev => {
+
     const key = ev.key;
     const currWord = document.querySelector(".word.current");
     const currLetter = document.querySelector(".letter.current");
-    const cursor = document.querySelector('.cursor');
     const expected = currLetter ? currLetter.innerHTML : ' ';
     const isLetter = (key.length === 1);
     const isBackspace = key === 'Backspace';
     const isFirstLetter = currWord && currLetter === currWord.firstChild;
-    const isExtraLetter = document.querySelector('.letter.extra-letter');
+    const extraLetters = document.querySelectorAll('.current.letter.extra-letter');
+    const isExtraLetter = extraLetters[extraLetters.length - 1];
+
+    cursor.style.display = 'block';
     //main letter checking logic
     if(expected !== ' ') {
         
@@ -90,7 +120,7 @@ document.querySelector(".game").addEventListener('keyup', ev => {
             addClass(currWord.previousSibling.lastChild, 'current');
             removeClass(currWord.previousSibling.lastChild, 'incorrect');
             removeClass(currWord.previousSibling.lastChild, 'correct');
-                       
+            
             
         } else if(currLetter && !isFirstLetter){
             removeClass(currLetter, 'current');
@@ -102,29 +132,38 @@ document.querySelector(".game").addEventListener('keyup', ev => {
             addClass(currWord.lastChild, 'current');
             removeClass(currWord.lastChild, 'correct');
             removeClass(currWord.lastChild, 'incorrect');
-            cursor.style.left = currWord.lastChild.getBoundingClientRect().left + 'px';
+            cursor.style.left = currWord.getBoundingClientRect().right + 'px';
             
         } 
         
         if(isExtraLetter) {
-            cursor.style.left = currWord.lastChild.getBoundingClientRect().right + 'px';
-            currWord.removeChild(currWord.lastChild);
+            currWord.removeChild(isExtraLetter);
+            cursor.style.left = isExtraLetter.getBoundingClientRect().right + 'px';
         }
-
+        
     } 
+
+    //scrooling of paragraph asa we type
+    const words = document.querySelector(".words");
+    const margin = parseInt(words.style.marginTop || '0px');
+    if(currWord.getBoundingClientRect().top > 350) {   
+        words.style.marginTop = (margin - 35) + "px";
+    }
+
+
     //moving the cursor logic
     const nextLetter = document.querySelector('.current.letter');
     const nextWord = document.querySelector('.current.word');
-
+    
     if(nextLetter) {
         cursor.style.top = nextLetter.getBoundingClientRect().top + 'px';
         cursor.style.left = nextLetter.getBoundingClientRect().left + 'px';
         
     } else {
+        cursor.style.top = nextWord.getBoundingClientRect().top + 'px';
         cursor.style.left = nextWord.getBoundingClientRect().right + 'px';
 
     } 
-
     
 })
 
