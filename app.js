@@ -1,5 +1,5 @@
 const words = 'this wonder lovely hate about should why funny coward fine do fantacy village dorm city a simple paragraph that is meant to nice and easy to type which why there will be mommas no periods or any capital letters so guess this means that it cannot really be considered but just series of run on sentences this should help you get faster at typing trying not use too many difficult words although think that might start making'.split(' ');
-const greets = [ 'Keep Going!!! You are doing great.', 'Practice makes a man perfect!', ' You are soo awesome!!', 'You got some skills', 'Impresive!!', 'That was superb!', 'that was cool..', 'wanna go another round?', 'High praise indeed!!', 'that was somthing!', 'You are so good at it', 'earned respect!'];
+const greets = [ 'Going great!!', 'Practice makes a man perfect!', ' You are soo awesome!!', 'You got some skills', 'Impresive!!', 'That was superb!', 'that was cool..', 'wanna go another round?', 'High praise indeed!!', 'that was somthing!', 'You are so good at it', 'earned respect!', 'Keep Going!!! You are doing great.'];
 
 const wordLen = words.length - 1;
 const cursor = document.querySelector('.cursor');
