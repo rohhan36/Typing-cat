@@ -15,12 +15,29 @@ body{
 
 .header {
     display: flex;
-    justify-content: space-around;
+    width: 850px;
+    justify-content: space-between ;
     margin: auto;
+    position: relative;
+}
+
+#capslock{
+
+    display: none;
+    position: absolute;
+    left: 325px;
+    background-color: var(--primaryAccent);
+    border: 1px solid var(--primaryAccent);
+    font-weight: 500;
+    color: black;
+    margin-top: 50px;
+    border-radius: 5px;
+    padding: 5px 15px;
 }
 
 .info{
-    padding-top: 5px;
+    margin-left: 5px;
+    margin-top: 10px;
 }
 
 .main-logo{
@@ -49,7 +66,7 @@ body{
 }
 
 .controls button{
-    margin: 10px;
+    margin-left: 10px;
     border: 1px solid var(--primaryAccent);
     color: var(--primaryAccent);
     padding: 5px 15px;
@@ -77,7 +94,7 @@ body{
 }
 
 .words{
-    filter: blur(4px);
+    filter: blur(6px);
 }
 
 .game{
@@ -95,7 +112,7 @@ body{
     inset: 0;
     text-align: center;
     color: white;
-    margin-top: 40px;
+    margin-top: 7vh;
     cursor: pointer;
 }
 
@@ -131,6 +148,83 @@ body{
     display: none;
 }
 
+.game.over .words{
+    opacity: 0.3;
+    filter: none;
+}
+
+.game.over .cursor{
+    display: none;
+}
+
+.game.over #focus-error{
+    display: none;
+}
+
+.keyboard{
+    margin-top: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.row1{
+    margin-bottom: 3px;
+    display: flex;
+}
+
+.row2{
+    margin-bottom: 3px;
+    margin-left: -40px;
+    display: flex;
+}
+
+.row3{
+    margin-bottom: 3px;
+    display: flex;
+}
+
+.keys {
+    height: 20px;
+    width: 20px;
+    padding: 10px;
+    color: grey;
+    margin: 3px;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+#spacebar {
+    color: #616161;
+    padding: 12px 100px;
+    border: 1px solid grey;
+    border-radius: 10px;
+    background: none;
+}
+
+#backspace {
+    color: #616161;
+    padding-left: 25px;
+    padding-right: 15px;
+    border: 1px solid grey;
+    background: none;
+    rotate: 180deg;
+}
+
+.greet{
+    display: none;
+    margin-top: 50px;
+    flex-direction: column;
+    align-items: center;
+    color: var(--primaryAccent);
+}
+
+.greet img{
+    object-fit: cover;
+    height: 100px;
+    width: 150px;
+}
 
 
 @keyframes blink {
